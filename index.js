@@ -65,6 +65,9 @@
 try {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts', {
          method: 'POST',
+         headers: {
+             'Content-Type': 'application/json'
+         },
         body: JSON.stringify({
             title: 'Holiday Nightmares',
             body: 'I had a nightmare about my holiday plans.',
@@ -79,3 +82,56 @@ try {
     console.log("Everything's good!!");
  }
 
+const promise= new Promise((resolve, reject) => {
+    const success = Math.random() > 0.5;
+    if (success) {
+        resolve('Operation successful');
+    } else {
+        reject('Operation failed');
+    }
+});
+
+try {
+    const result = await promise;
+    console.log(result);
+} catch (error) {
+    console.error(error);
+} finally {
+    console.log("Promise handling complete.");
+}
+
+
+const image = new Image();
+image.src = "https://via.placeholder.com/150";
+
+console.log(image);
+
+image.addEventListener('load', () => {
+    console.log('Image loaded successfully');
+});
+
+image.addEventListener('error', () => {
+    console.error('Failed to load image');
+});
+
+
+function preLoadImg(url) {
+    return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.src = url;
+        img.addEventListener('load', () => {
+            resolve(img);
+        });
+        img.addEventListener('error', () => {
+            reject('img has NOT loaded');
+        });
+    });
+}
+
+try {
+  const results = await preLoadImg('https://scrimba.ams3.cdn.digitaloceanspaces.com/assets/courses/gadvancedjs/scenic1.jpg')
+  console.log(results)
+  document.getElementById('img-container').appendChild(results)
+} catch (error) {
+  console.error(error)
+}
